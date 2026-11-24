@@ -1,0 +1,258 @@
+# -*- coding: utf-8 -*-
+"""Generate the 24-task evaluation set (deterministic expected values)."""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from data import price_summary
+
+HERE = Path(__file__).resolve().parent
+OUT = HERE / "tasks.json"
+
+d20 = price_summary("2026-11-20")
+d21 = price_summary("2026-11-21")
+d22 = price_summary("2026-11-22")
+assert d20 and d21 and d22
+
+spread_20_21 = round(d20["max"] - d21["min"], 2)
+spread_21 = round(d21["max"] - d21["min"], 2)
+pct20_spread_21 = round(spread_21 * 0.2, 2)
+avg22_90 = round(d22["avg"] * 0.9, 2)
+
+tasks = [
+    # ---------------- single tool ----------------
+    {
+        "id": "T01", "category": "single_tool",
+        "question": "北京今天天气怎么样？",
+        "reference_tool_calls": [{"name": "get_weather", "args": {"city": "北京"}}],
+        "expected_numbers": [25],
+        "expected_keywords_all": ["晴"],
+        "expected_keywords_any": [],
+    },
+    {
+        "id": "T02", "category": "single_tool",
+        "question": "上海今天天气怎么样？",
+        "reference_tool_calls": [{"name": "get_weather", "args": {"city": "上海"}}],
+        "expected_numbers": [22],
+        "expected_keywords_all": ["多云"],
+        "expected_keywords_any": [],
+    },
+    {
+        "id": "T03", "category": "single_tool",
+        "question": "计算 12 * 8 + 5 等于多少？",
+        "reference_tool_calls": [{"name": "calculate", "args": {"expression": "12 * 8 + 5"}}],
+        "expected_numbers": [101],
+        "expected_keywords_all": [],
+        "expected_keywords_any": [],
+    },
+    {
+        "id": "T04", "category": "single_tool",
+        "question": "计算 (96 * 15) / 60 等于多少？",
+        "reference_tool_calls": [{"name": "calculate", "args": {"expression": "(96 * 15) / 60"}}],
+        "expected_numbers": [24],
+        "expected_keywords_all": [],
+        "expected_keywords_any": [],
+    },
+    {
+        "id": "T05", "category": "single_tool",
+        "question": "2026-11-20 的日前电价最高价是多少？",
+        "reference_tool_calls": [{"name": "get_price_summary", "args": {"day": "2026-11-20"}}],
+        "expected_numbers": [d20["max"]],
+        "expected_keywords_all": [],
+        "expected_keywords_any": [],
+    },
+    {
+        "id": "T06", "category": "single_tool",
+        "question": "2026-11-20 的最低价是多少？出现在什么时间？",
+        "reference_tool_calls": [{"name": "get_price_summary", "args": {"day": "2026-11-20"}}],
+        "expected_numbers": [d20["min"]],
+        "expected_keywords_all": [d20["min_time"]],
+        "expected_keywords_any": [],
+    },
+    {
+        "id": "T07", "category": "single_tool",
+        "question": "现货市场的申报价格上限是多少？",
+        "reference_tool_calls": [{"name": "search_rules", "args": {"query": "申报价格上限"}}],
+        "expected_numbers": [650],
+        "expected_keywords_all": [],
+        "expected_keywords_any": [],
+    },
+    {
+        "id": "T08", "category": "single_tool",
+        "question": "日前市场的申报截止时间是几点？",
+        "reference_tool_calls": [{"name": "search_rules", "args": {"query": "日前申报截止时间"}}],
+        "expected_numbers": [],
+        "expected_keywords_all": ["10:00"],
+        "expected_keywords_any": [],
+    },
+    # ---------------- multi tool ----------------
+    {
+        "id": "T09", "category": "multi_tool",
+        "question": "上海今天的最高温是多少？把它乘以 2。",
+        "reference_tool_calls": [
+            {"name": "get_weather", "args": {"city": "上海"}},
+            {"name": "calculate", "args": {"expression": "22 * 2"}},
+        ],
+        "expected_numbers": [44],
+        "expected_keywords_all": [],
+        "expected_keywords_any": [],
+    },
+    {
+        "id": "T10", "category": "multi_tool",
+        "question": "申报价格上限和下限的差值是多少？",
+        "reference_tool_calls": [
+            {"name": "search_rules", "args": {"query": "申报价格上限 下限"}},
+            {"name": "calculate", "args": {"expression": "650 - 40"}},
+        ],
+        "expected_numbers": [610],
+        "expected_keywords_all": [],
+        "expected_keywords_any": [],
+    },
+    {
+        "id": "T11", "category": "multi_tool",
+        "question": "北京今天的最高温，加上 2026-11-20 的最高价，等于多少？",
+        "reference_tool_calls": [
+            {"name": "get_weather", "args": {"city": "北京"}},
+            {"name": "get_price_summary", "args": {"day": "2026-11-20"}},
+        ],
+        "expected_numbers": [531.86],
+        "expected_keywords_all": [],
+        "expected_keywords_any": [],
+    },
+    {
+        "id": "T12", "category": "multi_tool",
+        "question": "2026-11-20 的最高价减去 2026-11-21 的最低价，差是多少？",
+        "reference_tool_calls": [
+            {"name": "get_price_summary", "args": {"day": "2026-11-20"}},
+            {"name": "get_price_summary", "args": {"day": "2026-11-21"}},
+            {"name": "calculate", "args": {"expression": f"{d20['max']} - {d21['min']}"}},
+        ],
+        "expected_numbers": [spread_20_21],
+        "expected_keywords_all": [],
+        "expected_keywords_any": [],
+    },
+    {
+        "id": "T13", "category": "multi_tool",
+        "question": "规则里规定一天有多少个 15 分钟的结算时段？再算出一天总共有多少分钟。",
+        "reference_tool_calls": [
+            {"name": "search_rules", "args": {"query": "结算时段 15 分钟 96"}},
+            {"name": "calculate", "args": {"expression": "96 * 15"}},
+        ],
+        "expected_numbers": [1440],
+        "expected_keywords_all": [],
+        "expected_keywords_any": [],
+    },
+    {
+        "id": "T14", "category": "multi_tool",
+        "question": "2026-11-22 的均价乘以 90% 是多少？",
+        "reference_tool_calls": [
+            {"name": "get_price_summary", "args": {"day": "2026-11-22"}},
+            {"name": "calculate", "args": {"expression": f"{d22['avg']} * 0.9"}},
+        ],
+        "expected_numbers": [avg22_90],
+        "expected_keywords_all": [],
+        "expected_keywords_any": [],
+    },
+    # ---------------- multi round ----------------
+    {
+        "id": "T15", "category": "multi_round",
+        "question": "先查 2026-11-20 的最高价，再查 2026-11-21 的最低价，最后算两者的差值。",
+        "reference_tool_calls": [
+            {"name": "get_price_summary", "args": {"day": "2026-11-20"}},
+            {"name": "get_price_summary", "args": {"day": "2026-11-21"}},
+            {"name": "calculate", "args": {"expression": f"{d20['max']} - {d21['min']}"}},
+        ],
+        "expected_numbers": [spread_20_21],
+        "expected_keywords_all": [],
+        "expected_keywords_any": [],
+    },
+    {
+        "id": "T16", "category": "multi_round",
+        "question": "查 2026-11-21 的峰谷价差，再算它的 20%。",
+        "reference_tool_calls": [
+            {"name": "get_price_summary", "args": {"day": "2026-11-21"}},
+            {"name": "calculate", "args": {"expression": f"({d21['max']} - {d21['min']}) * 0.2"}},
+        ],
+        "expected_numbers": [pct20_spread_21],
+        "expected_keywords_all": [],
+        "expected_keywords_any": [],
+    },
+    {
+        "id": "T17", "category": "multi_round",
+        "question": "查规则里的申报价格上限，再算它的 90%。",
+        "reference_tool_calls": [
+            {"name": "search_rules", "args": {"query": "申报价格上限"}},
+            {"name": "calculate", "args": {"expression": "650 * 0.9"}},
+        ],
+        "expected_numbers": [585],
+        "expected_keywords_all": [],
+        "expected_keywords_any": [],
+    },
+    {
+        "id": "T18", "category": "multi_round",
+        "question": "查北京今天的最高温，再乘以 96。",
+        "reference_tool_calls": [
+            {"name": "get_weather", "args": {"city": "北京"}},
+            {"name": "calculate", "args": {"expression": "25 * 96"}},
+        ],
+        "expected_numbers": [2400],
+        "expected_keywords_all": [],
+        "expected_keywords_any": [],
+    },
+    # ---------------- tool error ----------------
+    {
+        "id": "T19", "category": "tool_error",
+        "question": "查一下火星今天的天气。",
+        "reference_tool_calls": [{"name": "get_weather", "args": {"city": "火星"}}],
+        "expected_numbers": [],
+        "expected_keywords_all": [],
+        "expected_keywords_any": ["没有", "无法", "未找到", "查不到", "不提供"],
+    },
+    {
+        "id": "T20", "category": "tool_error",
+        "question": "计算 12 / 0 等于多少？",
+        "reference_tool_calls": [{"name": "calculate", "args": {"expression": "12 / 0"}}],
+        "expected_numbers": [],
+        "expected_keywords_all": [],
+        "expected_keywords_any": ["除以 0", "不能除", "错误", "无法", "无意义"],
+    },
+    {
+        "id": "T21", "category": "tool_error",
+        "question": "查一下 2026-11-25 的电价；如果没有，告诉我有哪些可用日期。",
+        "reference_tool_calls": [{"name": "get_price_summary", "args": {"day": "2026-11-25"}}],
+        "expected_numbers": [],
+        "expected_keywords_all": [],
+        "expected_keywords_any": ["无电价", "没有", "无效", "无法", "可用日期"],
+    },
+    # ---------------- no answer ----------------
+    {
+        "id": "T22", "category": "no_answer",
+        "question": "明天股市会涨吗？",
+        "reference_tool_calls": [],
+        "expected_numbers": [],
+        "expected_keywords_all": [],
+        "expected_keywords_any": ["无法", "不能", "不知道", "不预测", "没有"],
+    },
+    {
+        "id": "T23", "category": "no_answer",
+        "question": "帮我订一张去北京的机票。",
+        "reference_tool_calls": [],
+        "expected_numbers": [],
+        "expected_keywords_all": [],
+        "expected_keywords_any": ["无法", "不能", "没有", "不提供", "做不到"],
+    },
+    {
+        "id": "T24", "category": "no_answer",
+        "question": "我们公司的内部预算是多少？",
+        "reference_tool_calls": [],
+        "expected_numbers": [],
+        "expected_keywords_all": [],
+        "expected_keywords_any": ["无法", "不知道", "没有", "不提供", "查不到"],
+    },
+]
+
+OUT.write_text(json.dumps(tasks, ensure_ascii=False, indent=2), encoding="utf-8")
+print(f"wrote {len(tasks)} tasks to {OUT}")
+for t in tasks:
+    print(t["id"], t["category"], t["question"])

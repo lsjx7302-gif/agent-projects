@@ -1,0 +1,1734 @@
+{
+  "model": "qwen3.8-flash",
+  "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  "timestamp": "2026-11-24T13:11:09",
+  "overall": {
+    "tasks": 24,
+    "task_success_rate": 1.0,
+    "tool_selection_accuracy": 0.9167,
+    "tool_precision": 0.9444,
+    "tool_recall": 0.9583,
+    "tool_f1": 0.95,
+    "arg_accuracy": 0.875,
+    "ragas_tool_accuracy": 0.6667,
+    "avg_tool_calls": 1.38,
+    "avg_llm_turns": 2.25,
+    "avg_latency_s": 3.31,
+    "total_tokens": 45181
+  },
+  "by_category": {
+    "multi_round": {
+      "tasks": 4,
+      "task_success_rate": 1.0,
+      "tool_selection_accuracy": 0.75,
+      "tool_precision": 0.9167,
+      "tool_recall": 1.0,
+      "tool_f1": 0.95,
+      "arg_accuracy": 0.875,
+      "ragas_tool_accuracy": 0.5,
+      "avg_tool_calls": 2.5,
+      "avg_llm_turns": 3.25,
+      "avg_latency_s": 4.19,
+      "total_tokens": 11662
+    },
+    "multi_tool": {
+      "tasks": 6,
+      "task_success_rate": 1.0,
+      "tool_selection_accuracy": 1.0,
+      "tool_precision": 1.0,
+      "tool_recall": 1.0,
+      "tool_f1": 1.0,
+      "arg_accuracy": 0.9167,
+      "ragas_tool_accuracy": 0.5,
+      "avg_tool_calls": 2.17,
+      "avg_llm_turns": 2.83,
+      "avg_latency_s": 4.31,
+      "total_tokens": 14828
+    },
+    "no_answer": {
+      "tasks": 3,
+      "task_success_rate": 1.0,
+      "tool_selection_accuracy": 1.0,
+      "tool_precision": 1.0,
+      "tool_recall": 1.0,
+      "tool_f1": 1.0,
+      "arg_accuracy": 1.0,
+      "ragas_tool_accuracy": 1.0,
+      "avg_tool_calls": 0.0,
+      "avg_llm_turns": 1.0,
+      "avg_latency_s": 2.52,
+      "total_tokens": 2308
+    },
+    "single_tool": {
+      "tasks": 8,
+      "task_success_rate": 1.0,
+      "tool_selection_accuracy": 1.0,
+      "tool_precision": 1.0,
+      "tool_recall": 1.0,
+      "tool_f1": 1.0,
+      "arg_accuracy": 0.875,
+      "ragas_tool_accuracy": 0.75,
+      "avg_tool_calls": 1.0,
+      "avg_llm_turns": 2.0,
+      "avg_latency_s": 2.54,
+      "total_tokens": 12370
+    },
+    "tool_error": {
+      "tasks": 3,
+      "task_success_rate": 1.0,
+      "tool_selection_accuracy": 0.6667,
+      "tool_precision": 0.6667,
+      "tool_recall": 0.6667,
+      "tool_f1": 0.6667,
+      "arg_accuracy": 0.6667,
+      "ragas_tool_accuracy": 0.6667,
+      "avg_tool_calls": 0.67,
+      "avg_llm_turns": 1.67,
+      "avg_latency_s": 2.99,
+      "total_tokens": 4013
+    }
+  },
+  "rows": [
+    {
+      "id": "T01",
+      "category": "single_tool",
+      "question": "北京今天天气怎么样？",
+      "reference_tool_calls": [
+        {
+          "name": "get_weather",
+          "args": {
+            "city": "北京"
+          }
+        }
+      ],
+      "expected_numbers": [
+        25
+      ],
+      "expected_keywords_all": [
+        "晴"
+      ],
+      "expected_keywords_any": [],
+      "answer": "北京今天：晴，气温 12°C ~ 25°C，北风 3 级。",
+      "tool_calls": [
+        {
+          "step": 1,
+          "name": "get_weather",
+          "args": {
+            "city": "北京"
+          },
+          "result": "北京：晴，最高 25°C，最低 12°C，北风 3 级。"
+        }
+      ],
+      "llm_turns": 2,
+      "latency_s": 1.96,
+      "usage": {
+        "prompt_tokens": 1397,
+        "completion_tokens": 97,
+        "total_tokens": 1494
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 1.0,
+        "predicted_tools": [
+          "get_weather"
+        ],
+        "reference_tools": [
+          "get_weather"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "number",
+            "expected": 25,
+            "tolerance": 0.25,
+            "ok": true
+          },
+          {
+            "type": "keyword_all",
+            "expected": "晴",
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 1.0
+      }
+    },
+    {
+      "id": "T02",
+      "category": "single_tool",
+      "question": "上海今天天气怎么样？",
+      "reference_tool_calls": [
+        {
+          "name": "get_weather",
+          "args": {
+            "city": "上海"
+          }
+        }
+      ],
+      "expected_numbers": [
+        22
+      ],
+      "expected_keywords_all": [
+        "多云"
+      ],
+      "expected_keywords_any": [],
+      "answer": "上海今天：多云，气温 16～22°C，东风 2 级。",
+      "tool_calls": [
+        {
+          "step": 1,
+          "name": "get_weather",
+          "args": {
+            "city": "上海"
+          },
+          "result": "上海：多云，最高 22°C，最低 16°C，东风 2 级。"
+        }
+      ],
+      "llm_turns": 2,
+      "latency_s": 1.78,
+      "usage": {
+        "prompt_tokens": 1397,
+        "completion_tokens": 76,
+        "total_tokens": 1473
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 1.0,
+        "predicted_tools": [
+          "get_weather"
+        ],
+        "reference_tools": [
+          "get_weather"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "number",
+            "expected": 22,
+            "tolerance": 0.22,
+            "ok": true
+          },
+          {
+            "type": "keyword_all",
+            "expected": "多云",
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 1.0
+      }
+    },
+    {
+      "id": "T03",
+      "category": "single_tool",
+      "question": "计算 12 * 8 + 5 等于多少？",
+      "reference_tool_calls": [
+        {
+          "name": "calculate",
+          "args": {
+            "expression": "12 * 8 + 5"
+          }
+        }
+      ],
+      "expected_numbers": [
+        101
+      ],
+      "expected_keywords_all": [],
+      "expected_keywords_any": [],
+      "answer": "12 * 8 + 5 = 101",
+      "tool_calls": [
+        {
+          "step": 1,
+          "name": "calculate",
+          "args": {
+            "expression": "12 * 8 + 5"
+          },
+          "result": "101"
+        }
+      ],
+      "llm_turns": 2,
+      "latency_s": 2.76,
+      "usage": {
+        "prompt_tokens": 1403,
+        "completion_tokens": 90,
+        "total_tokens": 1493
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 1.0,
+        "predicted_tools": [
+          "calculate"
+        ],
+        "reference_tools": [
+          "calculate"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "number",
+            "expected": 101,
+            "tolerance": 1.0,
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 1.0
+      }
+    },
+    {
+      "id": "T04",
+      "category": "single_tool",
+      "question": "计算 (96 * 15) / 60 等于多少？",
+      "reference_tool_calls": [
+        {
+          "name": "calculate",
+          "args": {
+            "expression": "(96 * 15) / 60"
+          }
+        }
+      ],
+      "expected_numbers": [
+        24
+      ],
+      "expected_keywords_all": [],
+      "expected_keywords_any": [],
+      "answer": "(96 × 15) / 60 = **24**",
+      "tool_calls": [
+        {
+          "step": 1,
+          "name": "calculate",
+          "args": {
+            "expression": "(96 * 15) / 60"
+          },
+          "result": "24"
+        }
+      ],
+      "llm_turns": 2,
+      "latency_s": 2.95,
+      "usage": {
+        "prompt_tokens": 1412,
+        "completion_tokens": 108,
+        "total_tokens": 1520
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 1.0,
+        "predicted_tools": [
+          "calculate"
+        ],
+        "reference_tools": [
+          "calculate"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "number",
+            "expected": 24,
+            "tolerance": 0.24,
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 1.0
+      }
+    },
+    {
+      "id": "T05",
+      "category": "single_tool",
+      "question": "2026-11-20 的日前电价最高价是多少？",
+      "reference_tool_calls": [
+        {
+          "name": "get_price_summary",
+          "args": {
+            "day": "2026-11-20"
+          }
+        }
+      ],
+      "expected_numbers": [
+        506.86
+      ],
+      "expected_keywords_all": [],
+      "expected_keywords_any": [],
+      "answer": "2026-11-20 日前电价最高价为 **506.86 元/MWh**，出现在 **18:45**。",
+      "tool_calls": [
+        {
+          "step": 1,
+          "name": "get_price_summary",
+          "args": {
+            "day": "2026-11-20"
+          },
+          "result": "{\"day\": \"2026-11-20\", \"max\": 506.86, \"max_time\": \"18:45\", \"min\": 174.32, \"min_time\": \"12:15\", \"avg\": 318.89, \"points\": 96, \"unit\": \"元/MWh\"}"
+        }
+      ],
+      "llm_turns": 2,
+      "latency_s": 2.96,
+      "usage": {
+        "prompt_tokens": 1496,
+        "completion_tokens": 148,
+        "total_tokens": 1644
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 1.0,
+        "predicted_tools": [
+          "get_price_summary"
+        ],
+        "reference_tools": [
+          "get_price_summary"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "number",
+            "expected": 506.86,
+            "tolerance": 2.534,
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 1.0
+      }
+    },
+    {
+      "id": "T06",
+      "category": "single_tool",
+      "question": "2026-11-20 的最低价是多少？出现在什么时间？",
+      "reference_tool_calls": [
+        {
+          "name": "get_price_summary",
+          "args": {
+            "day": "2026-11-20"
+          }
+        }
+      ],
+      "expected_numbers": [
+        174.32
+      ],
+      "expected_keywords_all": [
+        "12:15"
+      ],
+      "expected_keywords_any": [],
+      "answer": "2026-11-20 日前电价最低价 **174.32 元/MWh**，出现在 **12:15**。",
+      "tool_calls": [
+        {
+          "step": 1,
+          "name": "get_price_summary",
+          "args": {
+            "day": "2026-11-20"
+          },
+          "result": "{\"day\": \"2026-11-20\", \"max\": 506.86, \"max_time\": \"18:45\", \"min\": 174.32, \"min_time\": \"12:15\", \"avg\": 318.89, \"points\": 96, \"unit\": \"元/MWh\"}"
+        }
+      ],
+      "llm_turns": 2,
+      "latency_s": 2.87,
+      "usage": {
+        "prompt_tokens": 1498,
+        "completion_tokens": 118,
+        "total_tokens": 1616
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 1.0,
+        "predicted_tools": [
+          "get_price_summary"
+        ],
+        "reference_tools": [
+          "get_price_summary"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "number",
+            "expected": 174.32,
+            "tolerance": 1.0,
+            "ok": true
+          },
+          {
+            "type": "keyword_all",
+            "expected": "12:15",
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 1.0
+      }
+    },
+    {
+      "id": "T07",
+      "category": "single_tool",
+      "question": "现货市场的申报价格上限是多少？",
+      "reference_tool_calls": [
+        {
+          "name": "search_rules",
+          "args": {
+            "query": "申报价格上限"
+          }
+        }
+      ],
+      "expected_numbers": [
+        650
+      ],
+      "expected_keywords_all": [],
+      "expected_keywords_any": [],
+      "answer": "现货市场申报价格上限为 **650 元/兆瓦时**（下限为 40 元/兆瓦时）。",
+      "tool_calls": [
+        {
+          "step": 1,
+          "name": "search_rules",
+          "args": {
+            "query": "现货市场 申报价格上限"
+          },
+          "result": "[R01] 现货市场申报价格上限为 650 元/兆瓦时，下限为 40 元/兆瓦时。\n[R02] 日前市场申报截止时间为每日 10:00，逾期不再受理。\n[R03] 新能源机组在现货市场中优先出清，享有优先调度权。"
+        }
+      ],
+      "llm_turns": 2,
+      "latency_s": 2.9,
+      "usage": {
+        "prompt_tokens": 1460,
+        "completion_tokens": 133,
+        "total_tokens": 1593
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 1.0,
+        "predicted_tools": [
+          "search_rules"
+        ],
+        "reference_tools": [
+          "search_rules"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "number",
+            "expected": 650,
+            "tolerance": 3.25,
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 0.0
+      }
+    },
+    {
+      "id": "T08",
+      "category": "single_tool",
+      "question": "日前市场的申报截止时间是几点？",
+      "reference_tool_calls": [
+        {
+          "name": "search_rules",
+          "args": {
+            "query": "日前申报截止时间"
+          }
+        }
+      ],
+      "expected_numbers": [],
+      "expected_keywords_all": [
+        "10:00"
+      ],
+      "expected_keywords_any": [],
+      "answer": "日前市场申报截止时间为**每日 10:00**，逾期不再受理。",
+      "tool_calls": [
+        {
+          "step": 1,
+          "name": "search_rules",
+          "args": {
+            "query": "日前市场申报截止时间"
+          },
+          "result": "[R02] 日前市场申报截止时间为每日 10:00，逾期不再受理。\n[R01] 现货市场申报价格上限为 650 元/兆瓦时，下限为 40 元/兆瓦时。"
+        }
+      ],
+      "llm_turns": 2,
+      "latency_s": 2.15,
+      "usage": {
+        "prompt_tokens": 1438,
+        "completion_tokens": 99,
+        "total_tokens": 1537
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 0.0,
+        "predicted_tools": [
+          "search_rules"
+        ],
+        "reference_tools": [
+          "search_rules"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "keyword_all",
+            "expected": "10:00",
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 0.0
+      }
+    },
+    {
+      "id": "T09",
+      "category": "multi_tool",
+      "question": "上海今天的最高温是多少？把它乘以 2。",
+      "reference_tool_calls": [
+        {
+          "name": "get_weather",
+          "args": {
+            "city": "上海"
+          }
+        },
+        {
+          "name": "calculate",
+          "args": {
+            "expression": "22 * 2"
+          }
+        }
+      ],
+      "expected_numbers": [
+        44
+      ],
+      "expected_keywords_all": [],
+      "expected_keywords_any": [],
+      "answer": "上海今天最高温 22°C，乘以 2 = **44**。",
+      "tool_calls": [
+        {
+          "step": 1,
+          "name": "get_weather",
+          "args": {
+            "city": "上海"
+          },
+          "result": "上海：多云，最高 22°C，最低 16°C，东风 2 级。"
+        },
+        {
+          "step": 2,
+          "name": "calculate",
+          "args": {
+            "expression": "22*2"
+          },
+          "result": "44"
+        }
+      ],
+      "llm_turns": 3,
+      "latency_s": 3.52,
+      "usage": {
+        "prompt_tokens": 2194,
+        "completion_tokens": 139,
+        "total_tokens": 2333
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 1.0,
+        "predicted_tools": [
+          "get_weather",
+          "calculate"
+        ],
+        "reference_tools": [
+          "get_weather",
+          "calculate"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "number",
+            "expected": 44,
+            "tolerance": 0.44,
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 0.5
+      }
+    },
+    {
+      "id": "T10",
+      "category": "multi_tool",
+      "question": "申报价格上限和下限的差值是多少？",
+      "reference_tool_calls": [
+        {
+          "name": "search_rules",
+          "args": {
+            "query": "申报价格上限 下限"
+          }
+        },
+        {
+          "name": "calculate",
+          "args": {
+            "expression": "650 - 40"
+          }
+        }
+      ],
+      "expected_numbers": [
+        610
+      ],
+      "expected_keywords_all": [],
+      "expected_keywords_any": [],
+      "answer": "差值为 **610 元/兆瓦时**（上限 650 − 下限 40）。",
+      "tool_calls": [
+        {
+          "step": 1,
+          "name": "search_rules",
+          "args": {
+            "query": "申报价格上限 下限 差值"
+          },
+          "result": "[R01] 现货市场申报价格上限为 650 元/兆瓦时，下限为 40 元/兆瓦时。\n[R02] 日前市场申报截止时间为每日 10:00，逾期不再受理。"
+        },
+        {
+          "step": 2,
+          "name": "calculate",
+          "args": {
+            "expression": "650-40"
+          },
+          "result": "610"
+        }
+      ],
+      "llm_turns": 3,
+      "latency_s": 3.89,
+      "usage": {
+        "prompt_tokens": 2276,
+        "completion_tokens": 210,
+        "total_tokens": 2486
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 1.0,
+        "predicted_tools": [
+          "search_rules",
+          "calculate"
+        ],
+        "reference_tools": [
+          "search_rules",
+          "calculate"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "number",
+            "expected": 610,
+            "tolerance": 3.05,
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 0.0
+      }
+    },
+    {
+      "id": "T11",
+      "category": "multi_tool",
+      "question": "北京今天的最高温，加上 2026-11-20 的最高价，等于多少？",
+      "reference_tool_calls": [
+        {
+          "name": "get_weather",
+          "args": {
+            "city": "北京"
+          }
+        },
+        {
+          "name": "get_price_summary",
+          "args": {
+            "day": "2026-11-20"
+          }
+        }
+      ],
+      "expected_numbers": [
+        531.86
+      ],
+      "expected_keywords_all": [],
+      "expected_keywords_any": [],
+      "answer": "25 + 506.86 = **531.86**\n\n- 北京今日最高温：25°C\n- 2026-11-20 日前电价最高价：506.86 元/MWh（出现在 18:45）",
+      "tool_calls": [
+        {
+          "step": 1,
+          "name": "get_weather",
+          "args": {
+            "city": "北京"
+          },
+          "result": "北京：晴，最高 25°C，最低 12°C，北风 3 级。"
+        },
+        {
+          "step": 1,
+          "name": "get_price_summary",
+          "args": {
+            "day": "2026-11-20"
+          },
+          "result": "{\"day\": \"2026-11-20\", \"max\": 506.86, \"max_time\": \"18:45\", \"min\": 174.32, \"min_time\": \"12:15\", \"avg\": 318.89, \"points\": 96, \"unit\": \"元/MWh\"}"
+        }
+      ],
+      "llm_turns": 2,
+      "latency_s": 3.2,
+      "usage": {
+        "prompt_tokens": 1561,
+        "completion_tokens": 199,
+        "total_tokens": 1760
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 1.0,
+        "predicted_tools": [
+          "get_weather",
+          "get_price_summary"
+        ],
+        "reference_tools": [
+          "get_weather",
+          "get_price_summary"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "number",
+            "expected": 531.86,
+            "tolerance": 2.659,
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 1.0
+      }
+    },
+    {
+      "id": "T12",
+      "category": "multi_tool",
+      "question": "2026-11-20 的最高价减去 2026-11-21 的最低价，差是多少？",
+      "reference_tool_calls": [
+        {
+          "name": "get_price_summary",
+          "args": {
+            "day": "2026-11-20"
+          }
+        },
+        {
+          "name": "get_price_summary",
+          "args": {
+            "day": "2026-11-21"
+          }
+        },
+        {
+          "name": "calculate",
+          "args": {
+            "expression": "506.86 - 143.92"
+          }
+        }
+      ],
+      "expected_numbers": [
+        362.94
+      ],
+      "expected_keywords_all": [],
+      "expected_keywords_any": [],
+      "answer": "差值为 **362.94 元/MWh**\n\n- 2026-11-20 最高价：506.86 元/MWh（18:45）\n- 2026-11-21 最低价：143.92 元/MWh（12:45）\n- 506.86 − 143.92 = 362.94",
+      "tool_calls": [
+        {
+          "step": 1,
+          "name": "get_price_summary",
+          "args": {
+            "day": "2026-11-20"
+          },
+          "result": "{\"day\": \"2026-11-20\", \"max\": 506.86, \"max_time\": \"18:45\", \"min\": 174.32, \"min_time\": \"12:15\", \"avg\": 318.89, \"points\": 96, \"unit\": \"元/MWh\"}"
+        },
+        {
+          "step": 1,
+          "name": "get_price_summary",
+          "args": {
+            "day": "2026-11-21"
+          },
+          "result": "{\"day\": \"2026-11-21\", \"max\": 500.21, \"max_time\": \"19:30\", \"min\": 143.92, \"min_time\": \"12:45\", \"avg\": 316.9, \"points\": 96, \"unit\": \"元/MWh\"}"
+        },
+        {
+          "step": 2,
+          "name": "calculate",
+          "args": {
+            "expression": "506.86 - 143.92"
+          },
+          "result": "362.94"
+        }
+      ],
+      "llm_turns": 3,
+      "latency_s": 5.68,
+      "usage": {
+        "prompt_tokens": 2667,
+        "completion_tokens": 333,
+        "total_tokens": 3000
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 1.0,
+        "predicted_tools": [
+          "get_price_summary",
+          "get_price_summary",
+          "calculate"
+        ],
+        "reference_tools": [
+          "get_price_summary",
+          "get_price_summary",
+          "calculate"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "number",
+            "expected": 362.94,
+            "tolerance": 1.815,
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 1.0
+      }
+    },
+    {
+      "id": "T13",
+      "category": "multi_tool",
+      "question": "规则里规定一天有多少个 15 分钟的结算时段？再算出一天总共有多少分钟。",
+      "reference_tool_calls": [
+        {
+          "name": "search_rules",
+          "args": {
+            "query": "结算时段 15 分钟 96"
+          }
+        },
+        {
+          "name": "calculate",
+          "args": {
+            "expression": "96 * 15"
+          }
+        }
+      ],
+      "expected_numbers": [
+        1440
+      ],
+      "expected_keywords_all": [],
+      "expected_keywords_any": [],
+      "answer": "根据规则 R05：现货市场以 15 分钟为一个结算时段，全天共 **96 个时段**。\n\n计算：96 × 15 = **1440 分钟**（即 24 小时）。",
+      "tool_calls": [
+        {
+          "step": 1,
+          "name": "search_rules",
+          "args": {
+            "query": "一天有多少个15分钟结算时段 96点 结算时段划分"
+          },
+          "result": "[R05] 现货市场按 15 分钟为一个结算时段，全天共 96 个时段。"
+        },
+        {
+          "step": 2,
+          "name": "calculate",
+          "args": {
+            "expression": "96*15"
+          },
+          "result": "1440"
+        }
+      ],
+      "llm_turns": 3,
+      "latency_s": 6.36,
+      "usage": {
+        "prompt_tokens": 2269,
+        "completion_tokens": 295,
+        "total_tokens": 2564
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 0.5,
+        "predicted_tools": [
+          "search_rules",
+          "calculate"
+        ],
+        "reference_tools": [
+          "search_rules",
+          "calculate"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "number",
+            "expected": 1440,
+            "tolerance": 7.2,
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 0.0
+      }
+    },
+    {
+      "id": "T14",
+      "category": "multi_tool",
+      "question": "2026-11-22 的均价乘以 90% 是多少？",
+      "reference_tool_calls": [
+        {
+          "name": "get_price_summary",
+          "args": {
+            "day": "2026-11-22"
+          }
+        },
+        {
+          "name": "calculate",
+          "args": {
+            "expression": "316.84 * 0.9"
+          }
+        }
+      ],
+      "expected_numbers": [
+        285.16
+      ],
+      "expected_keywords_all": [],
+      "expected_keywords_any": [],
+      "answer": "2026-11-22 日前均价为 **316.84 元/MWh**，乘以 90% 后约为 **285.16 元/MWh**（精确值 285.156）。",
+      "tool_calls": [
+        {
+          "step": 1,
+          "name": "get_price_summary",
+          "args": {
+            "day": "2026-11-22"
+          },
+          "result": "{\"day\": \"2026-11-22\", \"max\": 497.14, \"max_time\": \"18:45\", \"min\": 168.72, \"min_time\": \"12:00\", \"avg\": 316.84, \"points\": 96, \"unit\": \"元/MWh\"}"
+        },
+        {
+          "step": 2,
+          "name": "calculate",
+          "args": {
+            "expression": "316.84*0.9"
+          },
+          "result": "285.156"
+        }
+      ],
+      "llm_turns": 3,
+      "latency_s": 3.22,
+      "usage": {
+        "prompt_tokens": 2381,
+        "completion_tokens": 304,
+        "total_tokens": 2685
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 1.0,
+        "predicted_tools": [
+          "get_price_summary",
+          "calculate"
+        ],
+        "reference_tools": [
+          "get_price_summary",
+          "calculate"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "number",
+            "expected": 285.16,
+            "tolerance": 1.426,
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 0.5
+      }
+    },
+    {
+      "id": "T15",
+      "category": "multi_round",
+      "question": "先查 2026-11-20 的最高价，再查 2026-11-21 的最低价，最后算两者的差值。",
+      "reference_tool_calls": [
+        {
+          "name": "get_price_summary",
+          "args": {
+            "day": "2026-11-20"
+          }
+        },
+        {
+          "name": "get_price_summary",
+          "args": {
+            "day": "2026-11-21"
+          }
+        },
+        {
+          "name": "calculate",
+          "args": {
+            "expression": "506.86 - 143.92"
+          }
+        }
+      ],
+      "expected_numbers": [
+        362.94
+      ],
+      "expected_keywords_all": [],
+      "expected_keywords_any": [],
+      "answer": "- 2026-11-20 最高价：506.86 元/MWh（出现在 18:45）\n- 2026-11-21 最低价：143.92 元/MWh（出现在 12:45）\n- 差值：506.86 − 143.92 = **362.94 元/MWh**",
+      "tool_calls": [
+        {
+          "step": 1,
+          "name": "get_price_summary",
+          "args": {
+            "day": "2026-11-20"
+          },
+          "result": "{\"day\": \"2026-11-20\", \"max\": 506.86, \"max_time\": \"18:45\", \"min\": 174.32, \"min_time\": \"12:15\", \"avg\": 318.89, \"points\": 96, \"unit\": \"元/MWh\"}"
+        },
+        {
+          "step": 1,
+          "name": "get_price_summary",
+          "args": {
+            "day": "2026-11-21"
+          },
+          "result": "{\"day\": \"2026-11-21\", \"max\": 500.21, \"max_time\": \"19:30\", \"min\": 143.92, \"min_time\": \"12:45\", \"avg\": 316.9, \"points\": 96, \"unit\": \"元/MWh\"}"
+        },
+        {
+          "step": 2,
+          "name": "calculate",
+          "args": {
+            "expression": "506.86 - 143.92"
+          },
+          "result": "362.94"
+        }
+      ],
+      "llm_turns": 3,
+      "latency_s": 6.12,
+      "usage": {
+        "prompt_tokens": 2691,
+        "completion_tokens": 346,
+        "total_tokens": 3037
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 1.0,
+        "predicted_tools": [
+          "get_price_summary",
+          "get_price_summary",
+          "calculate"
+        ],
+        "reference_tools": [
+          "get_price_summary",
+          "get_price_summary",
+          "calculate"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "number",
+            "expected": 362.94,
+            "tolerance": 1.815,
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 1.0
+      }
+    },
+    {
+      "id": "T16",
+      "category": "multi_round",
+      "question": "查 2026-11-21 的峰谷价差，再算它的 20%。",
+      "reference_tool_calls": [
+        {
+          "name": "get_price_summary",
+          "args": {
+            "day": "2026-11-21"
+          }
+        },
+        {
+          "name": "calculate",
+          "args": {
+            "expression": "(500.21 - 143.92) * 0.2"
+          }
+        }
+      ],
+      "expected_numbers": [
+        71.26
+      ],
+      "expected_keywords_all": [],
+      "expected_keywords_any": [],
+      "answer": "2026-11-21 日前电价（96 点）：\n- 最高价 500.21 元/MWh（19:30），最低价 143.92 元/MWh（12:45）\n- 峰谷价差（最高−最低）= **356.29 元/MWh**\n- 其 20% = **71.26 元/MWh**（约 71.258）\n\n均价 316.90 元/MWh。",
+      "tool_calls": [
+        {
+          "step": 1,
+          "name": "get_price_summary",
+          "args": {
+            "day": "2026-11-21"
+          },
+          "result": "{\"day\": \"2026-11-21\", \"max\": 500.21, \"max_time\": \"19:30\", \"min\": 143.92, \"min_time\": \"12:45\", \"avg\": 316.9, \"points\": 96, \"unit\": \"元/MWh\"}"
+        },
+        {
+          "step": 2,
+          "name": "calculate",
+          "args": {
+            "expression": "500.21 - 143.92"
+          },
+          "result": "356.29"
+        },
+        {
+          "step": 3,
+          "name": "calculate",
+          "args": {
+            "expression": "356.29 * 0.2"
+          },
+          "result": "71.258"
+        }
+      ],
+      "llm_turns": 4,
+      "latency_s": 4.07,
+      "usage": {
+        "prompt_tokens": 3342,
+        "completion_tokens": 416,
+        "total_tokens": 3758
+      },
+      "metrics": {
+        "tool_selection": 0.0,
+        "tool_precision": 0.6667,
+        "tool_recall": 1.0,
+        "tool_f1": 0.8,
+        "arg_accuracy": 0.5,
+        "predicted_tools": [
+          "get_price_summary",
+          "calculate",
+          "calculate"
+        ],
+        "reference_tools": [
+          "get_price_summary",
+          "calculate"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "number",
+            "expected": 71.26,
+            "tolerance": 0.713,
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 0.5
+      }
+    },
+    {
+      "id": "T17",
+      "category": "multi_round",
+      "question": "查规则里的申报价格上限，再算它的 90%。",
+      "reference_tool_calls": [
+        {
+          "name": "search_rules",
+          "args": {
+            "query": "申报价格上限"
+          }
+        },
+        {
+          "name": "calculate",
+          "args": {
+            "expression": "650 * 0.9"
+          }
+        }
+      ],
+      "expected_numbers": [
+        585
+      ],
+      "expected_keywords_all": [],
+      "expected_keywords_any": [],
+      "answer": "**规则依据**：R01 现货市场申报价格上限为 **650 元/兆瓦时**（下限 40 元/兆瓦时）。\n\n**计算**：650 × 90% = **585 元/兆瓦时**",
+      "tool_calls": [
+        {
+          "step": 1,
+          "name": "search_rules",
+          "args": {
+            "query": "日前市场申报价格上限"
+          },
+          "result": "[R01] 现货市场申报价格上限为 650 元/兆瓦时，下限为 40 元/兆瓦时。\n[R02] 日前市场申报截止时间为每日 10:00，逾期不再受理。"
+        },
+        {
+          "step": 2,
+          "name": "calculate",
+          "args": {
+            "expression": "650*0.9"
+          },
+          "result": "585"
+        }
+      ],
+      "llm_turns": 3,
+      "latency_s": 3.07,
+      "usage": {
+        "prompt_tokens": 2286,
+        "completion_tokens": 248,
+        "total_tokens": 2534
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 1.0,
+        "predicted_tools": [
+          "search_rules",
+          "calculate"
+        ],
+        "reference_tools": [
+          "search_rules",
+          "calculate"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "number",
+            "expected": 585,
+            "tolerance": 2.925,
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 0.0
+      }
+    },
+    {
+      "id": "T18",
+      "category": "multi_round",
+      "question": "查北京今天的最高温，再乘以 96。",
+      "reference_tool_calls": [
+        {
+          "name": "get_weather",
+          "args": {
+            "city": "北京"
+          }
+        },
+        {
+          "name": "calculate",
+          "args": {
+            "expression": "25 * 96"
+          }
+        }
+      ],
+      "expected_numbers": [
+        2400
+      ],
+      "expected_keywords_all": [],
+      "expected_keywords_any": [],
+      "answer": "北京今天最高温 **25°C**，25 × 96 = **2400**。",
+      "tool_calls": [
+        {
+          "step": 1,
+          "name": "get_weather",
+          "args": {
+            "city": "北京"
+          },
+          "result": "北京：晴，最高 25°C，最低 12°C，北风 3 级。"
+        },
+        {
+          "step": 2,
+          "name": "calculate",
+          "args": {
+            "expression": "25*96"
+          },
+          "result": "2400"
+        }
+      ],
+      "llm_turns": 3,
+      "latency_s": 3.51,
+      "usage": {
+        "prompt_tokens": 2200,
+        "completion_tokens": 133,
+        "total_tokens": 2333
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 1.0,
+        "predicted_tools": [
+          "get_weather",
+          "calculate"
+        ],
+        "reference_tools": [
+          "get_weather",
+          "calculate"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "number",
+            "expected": 2400,
+            "tolerance": 12.0,
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 0.5
+      }
+    },
+    {
+      "id": "T19",
+      "category": "tool_error",
+      "question": "查一下火星今天的天气。",
+      "reference_tool_calls": [
+        {
+          "name": "get_weather",
+          "args": {
+            "city": "火星"
+          }
+        }
+      ],
+      "expected_numbers": [],
+      "expected_keywords_all": [],
+      "expected_keywords_any": [
+        "没有",
+        "无法",
+        "未找到",
+        "查不到",
+        "不提供"
+      ],
+      "answer": "抱歉，我无法查询火星的天气。\n\n我现有的天气工具只支持地球城市的实时天气查询（如北京、上海等），不具备火星或其他行星的气象数据能力。\n\n如果你需要，我可以：\n- 查询某个地球城市的今日天气\n- 查询电力现货市场规则、电价数据等\n\n请告诉我你想查哪个城市或哪类信息。",
+      "tool_calls": [],
+      "llm_turns": 1,
+      "latency_s": 2.31,
+      "usage": {
+        "prompt_tokens": 667,
+        "completion_tokens": 110,
+        "total_tokens": 777
+      },
+      "metrics": {
+        "tool_selection": 0.0,
+        "tool_precision": 0.0,
+        "tool_recall": 0.0,
+        "tool_f1": 0.0,
+        "arg_accuracy": 0.0,
+        "predicted_tools": [],
+        "reference_tools": [
+          "get_weather"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "keyword_any",
+            "expected": [
+              "没有",
+              "无法",
+              "未找到",
+              "查不到",
+              "不提供"
+            ],
+            "hit": [
+              "无法"
+            ],
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 0.0
+      }
+    },
+    {
+      "id": "T20",
+      "category": "tool_error",
+      "question": "计算 12 / 0 等于多少？",
+      "reference_tool_calls": [
+        {
+          "name": "calculate",
+          "args": {
+            "expression": "12 / 0"
+          }
+        }
+      ],
+      "expected_numbers": [],
+      "expected_keywords_all": [],
+      "expected_keywords_any": [
+        "除以 0",
+        "不能除",
+        "错误",
+        "无法",
+        "无意义"
+      ],
+      "answer": "无法计算：除数为 0。\n\n数学上 12 ÷ 0 是**未定义**的（0 不能作除数，没有任何数乘以 0 会得到 12）。",
+      "tool_calls": [
+        {
+          "step": 1,
+          "name": "calculate",
+          "args": {
+            "expression": "12 / 0"
+          },
+          "result": "ERROR: 不能除以 0。"
+        }
+      ],
+      "llm_turns": 2,
+      "latency_s": 1.83,
+      "usage": {
+        "prompt_tokens": 1399,
+        "completion_tokens": 145,
+        "total_tokens": 1544
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 1.0,
+        "predicted_tools": [
+          "calculate"
+        ],
+        "reference_tools": [
+          "calculate"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "keyword_any",
+            "expected": [
+              "除以 0",
+              "不能除",
+              "错误",
+              "无法",
+              "无意义"
+            ],
+            "hit": [
+              "无法"
+            ],
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 1.0
+      }
+    },
+    {
+      "id": "T21",
+      "category": "tool_error",
+      "question": "查一下 2026-11-25 的电价；如果没有，告诉我有哪些可用日期。",
+      "reference_tool_calls": [
+        {
+          "name": "get_price_summary",
+          "args": {
+            "day": "2026-11-25"
+          }
+        }
+      ],
+      "expected_numbers": [],
+      "expected_keywords_all": [],
+      "expected_keywords_any": [
+        "无电价",
+        "没有",
+        "无效",
+        "无法",
+        "可用日期"
+      ],
+      "answer": "未能获取 2026-11-25 的电价数据（该日期无数据）。\n\n**当前可用日期：**\n- 2026-11-20\n- 2026-11-21\n- 2026-11-22\n\n需要我查询其中某一天的 96 点电价最高价、最低价、均价及出现时间吗？",
+      "tool_calls": [
+        {
+          "step": 1,
+          "name": "get_price_summary",
+          "args": {
+            "day": "2026-11-25"
+          },
+          "result": "ERROR: 日期 \"2026-11-25\" 无电价数据，可用日期：2026-11-20、2026-11-21、2026-11-22。"
+        }
+      ],
+      "llm_turns": 2,
+      "latency_s": 4.82,
+      "usage": {
+        "prompt_tokens": 1480,
+        "completion_tokens": 212,
+        "total_tokens": 1692
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 1.0,
+        "predicted_tools": [
+          "get_price_summary"
+        ],
+        "reference_tools": [
+          "get_price_summary"
+        ],
+        "success": true,
+        "checks": [
+          {
+            "type": "keyword_any",
+            "expected": [
+              "无电价",
+              "没有",
+              "无效",
+              "无法",
+              "可用日期"
+            ],
+            "hit": [
+              "可用日期"
+            ],
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 1.0
+      }
+    },
+    {
+      "id": "T22",
+      "category": "no_answer",
+      "question": "明天股市会涨吗？",
+      "reference_tool_calls": [],
+      "expected_numbers": [],
+      "expected_keywords_all": [],
+      "expected_keywords_any": [
+        "无法",
+        "不能",
+        "不知道",
+        "不预测",
+        "没有"
+      ],
+      "answer": "无法回答。我没有获取或预测股市行情的能力，当前可用工具仅支持天气查询、电力现货市场规则检索、算术计算和日前电价统计。\n\n如需了解股市走势，建议参考券商研报或持牌投资顾问的意见；股市预测本身也存在高度不确定性。",
+      "tool_calls": [],
+      "llm_turns": 1,
+      "latency_s": 3.1,
+      "usage": {
+        "prompt_tokens": 667,
+        "completion_tokens": 103,
+        "total_tokens": 770
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 1.0,
+        "predicted_tools": [],
+        "reference_tools": [],
+        "success": true,
+        "checks": [
+          {
+            "type": "keyword_any",
+            "expected": [
+              "无法",
+              "不能",
+              "不知道",
+              "不预测",
+              "没有"
+            ],
+            "hit": [
+              "无法",
+              "没有"
+            ],
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 1.0
+      }
+    },
+    {
+      "id": "T23",
+      "category": "no_answer",
+      "question": "帮我订一张去北京的机票。",
+      "reference_tool_calls": [],
+      "expected_numbers": [],
+      "expected_keywords_all": [],
+      "expected_keywords_any": [
+        "无法",
+        "不能",
+        "没有",
+        "不提供",
+        "做不到"
+      ],
+      "answer": "抱歉，我无法帮您预订机票——当前可用的工具只支持天气查询、电力现货市场规则检索、四则运算和电价数据查询，没有订票功能。\n\n如果需要，我可以帮您：\n- 查询北京今天的天气，方便您安排行程；\n- 查询某天的电价数据或市场规则条款。\n\n请告诉我是否需要这些帮助。",
+      "tool_calls": [],
+      "llm_turns": 1,
+      "latency_s": 2.89,
+      "usage": {
+        "prompt_tokens": 668,
+        "completion_tokens": 120,
+        "total_tokens": 788
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 1.0,
+        "predicted_tools": [],
+        "reference_tools": [],
+        "success": true,
+        "checks": [
+          {
+            "type": "keyword_any",
+            "expected": [
+              "无法",
+              "不能",
+              "没有",
+              "不提供",
+              "做不到"
+            ],
+            "hit": [
+              "无法",
+              "没有"
+            ],
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 1.0
+      }
+    },
+    {
+      "id": "T24",
+      "category": "no_answer",
+      "question": "我们公司的内部预算是多少？",
+      "reference_tool_calls": [],
+      "expected_numbers": [],
+      "expected_keywords_all": [],
+      "expected_keywords_any": [
+        "无法",
+        "不知道",
+        "没有",
+        "不提供",
+        "查不到"
+      ],
+      "answer": "无法回答。公司内部预算属于企业内部数据，我目前没有可访问相关信息的工具，也不应凭记忆编造。\n\n建议向公司财务部门或预算负责人查询，或查阅内部预算文件/系统。",
+      "tool_calls": [],
+      "llm_turns": 1,
+      "latency_s": 1.57,
+      "usage": {
+        "prompt_tokens": 667,
+        "completion_tokens": 83,
+        "total_tokens": 750
+      },
+      "metrics": {
+        "tool_selection": 1.0,
+        "tool_precision": 1.0,
+        "tool_recall": 1.0,
+        "tool_f1": 1.0,
+        "arg_accuracy": 1.0,
+        "predicted_tools": [],
+        "reference_tools": [],
+        "success": true,
+        "checks": [
+          {
+            "type": "keyword_any",
+            "expected": [
+              "无法",
+              "不知道",
+              "没有",
+              "不提供",
+              "查不到"
+            ],
+            "hit": [
+              "无法",
+              "没有"
+            ],
+            "ok": true
+          }
+        ],
+        "ragas_tool_accuracy": 1.0
+      }
+    }
+  ]
+}
